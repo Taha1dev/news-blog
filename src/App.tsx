@@ -1,5 +1,4 @@
 import {
-  Outlet,
   Route,
   RouterProvider,
   createBrowserRouter,
@@ -14,7 +13,7 @@ const App = () => {
     createRoutesFromElements(
       <Route>
         <Route index element={<Home />} />
-        <Route path="Article/:date/:author" element={<Article />} />
+        <Route    path="Article/:date/:author" element={<Article />} />
       </Route>
     )
   )

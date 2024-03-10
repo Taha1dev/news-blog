@@ -1,21 +1,18 @@
-import { lazy, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GuardianApiResponse, NewsApiResponse } from '../models/models.model'
-import {
-  getGuardianNews,
-  getNewsApiSources,
-  getNewsFromNewsApi,
-} from '../utils/axios'
-import { Spinner } from '@material-tailwind/react'
+import { getNewsApiSources, SearchNews } from '../utils/axios'
 import CategoriesBar from '../components/chunks/CategoriesBar'
-
-const Article = lazy(() => import('../components/News/Article'))
+import Spinner from '../components/chunks/Spinner'
+import { Input, Select, Option } from '@material-tailwind/react'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+const Article = React.lazy(() => import('../components/News/Article'))
 function Home() {
   const [newsData, setNewsData] = useState<NewsApiResponse>(
     {} as NewsApiResponse
   )
   const [categories, setCategories] = useState<any>()
   const [sources, setSources] = useState<any>()
-  const [langs, setLangs] = useState<any>({})
+  const [langs, setLangs] = useState<any>([])
   const [guardianNews, setGuardianNews] = useState<GuardianApiResponse>(
     {} as GuardianApiResponse
   )
@@ -25,10 +22,11 @@ function Home() {
     const fetchData = async () => {
       try {
         setLoading(true)
-        const dataFromNewsApi = await getNewsFromNewsApi()
+        const dataFromNewsApi = await SearchNews()
         setNewsData(dataFromNewsApi)
-        const dataFromGuardian = await getGuardianNews('gaza')
-        setGuardianNews(dataFromGuardian)
+        // const dataFromGuardian: GuardianApiResponse =
+        //   await getGuardianNews('gaza')
+        // setGuardianNews(dataFromGuardian)
         const res = await getNewsApiSources()
         const uniqueCategories = [
           ...new Set(res.sources.map((source) => source.category)),
@@ -42,9 +40,9 @@ function Home() {
         setCategories(uniqueCategories)
         setSources(uniqueSources)
         setLangs(uniqueLangs)
-        console.log('unique', categories)
-        console.log('unique', langs)
-        console.log('unique', sources)
+        console.log('categories', categories)
+        console.log('langs', langs)
+        console.log('sources', sources)
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -65,7 +63,55 @@ function Home() {
     <>
       <div className="container mx-auto my-8 flex flex-col items-center">
         <CategoriesBar categories={categories} />
-        <h1 className="mt-2 text-3xl font-bold text-white mb-4">Latest News</h1>
+        <div className="mt-4 flex lg:flex-row gap-4 flex-col m-2">
+          <Input
+            variant="outlined"
+            crossOrigin={''}
+            className="flex-1"
+            label="Search..."
+            icon={<MagnifyingGlassIcon />}
+          />
+          <Select
+            placeholder={'Languages'}
+            label="Select Version"
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 25 },
+            }}
+          >
+            {langs &&
+              Array.from(langs).map((lang, i) => (
+                <Option key={i}>{lang as React.ReactNode}</Option>
+              ))}
+          </Select>
+          <Select
+            placeholder={'Countries'}
+            label="Select Country"
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 25 },
+            }}
+          >
+            {langs &&
+              Array.from(categories).map((cat, i) => (
+                <Option key={i}>{cat as React.ReactNode}</Option>
+              ))}
+          </Select>
+          <Select
+            placeholder={'Languages'}
+            label="Select Version"
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 25 },
+            }}
+          >
+            {langs &&
+              Array.from(sources).map((s, i) => (
+                <Option key={i}>{s as React.ReactNode}</Option>
+              ))}
+          </Select>
+        </div>
+        <h1 className="mt-2 text-3xl font-bold  mb-4">Latest News</h1>
         <div className="flex flex-wrap justify-center gap-8">
           {newsData.articles.map((article, index) => (
             <Article key={index} article={article} />
