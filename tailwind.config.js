@@ -5,8 +5,11 @@ export default withMT({
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['open sans', 'sans-serif'],
+      },
       colors: {
-        card: '#0a0a0a',
+        card: '#f6f8fc',
       },
     },
   },

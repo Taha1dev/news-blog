@@ -7,7 +7,7 @@ type ArticleProps = {
 }
 const Article: React.FC<ArticleProps> = ({ article }) => {
   return (
-    <div className="bg-card border border-[#242424] transition-colors hover:border-white p-4 rounded-md shadow-md flex flex-col max-w-sm text-white">
+    <div className="bg-card border border-[#d8d8d8] transition-colors hover:border-gray-800 p-4 rounded-md shadow-md flex flex-col max-w-sm text-gray-800">
       {article.content ? (
         <Link
           className="text-xl font-semibold mb-2"
@@ -27,7 +27,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
       <p>{article.description}</p>
       <img
-        src={article.urlToImage ?? 'public/assets/fallbackArticle.png'}
+        src={article.urlToImage ?? 'assets/fallbackArticle.png'}
         alt={article.title}
         width={200}
         loading="lazy"
