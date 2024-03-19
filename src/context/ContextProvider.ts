@@ -9,7 +9,8 @@ export type ContextProps = {
     | ChangeEvent<HTMLInputElement>
     | Dispatch<SetStateAction<string>>
     | any
-
+  isLoading: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
   langs: string
   setLangs: Dispatch<SetStateAction<string>>
   categories: string[] | any

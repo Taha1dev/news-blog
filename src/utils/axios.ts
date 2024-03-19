@@ -1,9 +1,5 @@
 import axios from 'axios'
-import {
-  GuardianApiResponse,
-  NewsApiResponse,
-  ResponseSource,
-} from '../models/models.model'
+import { NewsApiResponse, ResponseSource } from '../models/models.model'
 const VITE_NEWS_API_API_KEY = 'd6b0495557c84be8a81d54eed826b648'
 const VITE_GUARDIAN_API_KEY = '2baeabf6-e517-4631-b27f-be3cda882dd6'
 
@@ -21,10 +17,26 @@ const VITE_GUARDIAN_API_KEY = '2baeabf6-e517-4631-b27f-be3cda882dd6'
 //     throw error
 //   }
 // }
-export const SearchNews = async (
-  searchQuery = 'gaza',
+export const GetNews = async (
+  category: any = 'general',
+  lang: any = 'en',
+  country: any = 'us'
 ): Promise<NewsApiResponse> => {
-  const url = `https://newsapi.org/v2/everything?q=${searchQuery}`
+  const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&lang=${lang}`
+  try {
+    const response = await axios.get(url, {
+      headers: { 'X-Api-Key': VITE_NEWS_API_API_KEY },
+    })
+    const data: NewsApiResponse = response.data
+    console.log('getNewsFromNewsApi', data)
+    return data
+  } catch (error) {
+    console.error('Error fetching news:', error)
+    throw error
+  }
+}
+export const SearchNews = async (q: any): Promise<NewsApiResponse> => {
+  const url = `https://newsapi.org/v2/everything?q=${q}`
   try {
     const response = await axios.get(url, {
       headers: { 'X-Api-Key': VITE_NEWS_API_API_KEY },
