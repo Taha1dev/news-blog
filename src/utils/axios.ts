@@ -35,8 +35,15 @@ export const GetNews = async (
     throw error
   }
 }
-export const SearchNews = async (q: any): Promise<NewsApiResponse> => {
-  const url = `https://newsapi.org/v2/everything?q=${q}`
+
+export const SearchNews = async (
+  q: any,
+  sortBy?: string
+): Promise<NewsApiResponse> => {
+  let url = `https://newsapi.org/v2/everything?q=${q}`
+  if (sortBy) {
+    url += `&sortBy=${sortBy}`
+  }
   try {
     const response = await axios.get(url, {
       headers: { 'X-Api-Key': VITE_NEWS_API_API_KEY },

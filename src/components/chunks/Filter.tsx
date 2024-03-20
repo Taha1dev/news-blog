@@ -7,6 +7,7 @@ const Filter = () => {
   const [selectedCat, setSelectedCat] = useState('general')
   const [selectedLang, setSelectedLang] = useState('en')
   const [selectedCountry, setSelectedCountry] = useState('en')
+  const sortBy = ['relevancy', 'popularity', 'publishedAt']
   const {
     setNewsData,
     searchValue,
@@ -25,7 +26,8 @@ const Filter = () => {
   const handleSearch = async () => {
     console.log(searchValue)
     setIsLoading(true)
-    setNewsData(await SearchNews(searchValue))
+    const q = searchValue.replace(' ', '+')
+    setNewsData(await SearchNews(q))
     setIsLoading(false)
   }
 
@@ -106,23 +108,42 @@ const Filter = () => {
             : ''}
         </Select>
       </div>
-      <div className="relative flex flex-1">
-        <Input
-          crossOrigin={''}
-          type="text"
-          label="Search..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <Button
-          color="black"
-          placeholder={''}
-          size="sm"
-          onClick={handleSearch}
-          className="!absolute right-1 top-1 rounded"
-        >
-          Search
-        </Button>
+      <div className="flex gap-2">
+        <div className="relative flex flex-1">
+          <Input
+            crossOrigin={''}
+            type="text"
+            label="Search..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <Button
+            color="black"
+            disabled={!searchValue}
+            placeholder={''}
+            size="sm"
+            onClick={handleSearch}
+            className="!absolute right-1 top-1 rounded"
+          >
+            Search
+          </Button>
+        </div>
+        <div>
+          <Select
+            placeholder={''}
+            label="Sort By"
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 25 },
+            }}
+          >
+            {sortBy.map((e, i) => (
+              <Option value={e} key={i}>
+                {e}
+              </Option>
+            ))}
+          </Select>
+        </div>
       </div>
     </div>
   )
