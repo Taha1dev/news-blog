@@ -17,12 +17,22 @@ const VITE_GUARDIAN_API_KEY = '2baeabf6-e517-4631-b27f-be3cda882dd6'
 //     throw error
 //   }
 // }
+
 export const GetNews = async (
-  category: any = 'general',
-  lang: any = 'en',
-  country: any = 'us'
+  category: string = 'general',
+  lang?: string,
+  country?: string
 ): Promise<NewsApiResponse> => {
-  const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&lang=${lang}`
+  let url = `https://newsapi.org/v2/top-headlines?category=${category}`
+
+  if (lang && country) {
+    url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&language=${lang}`
+  } else if (lang) {
+    url = `https://newsapi.org/v2/top-headlines?category=${category}&language=${lang}`
+  } else if (country) {
+    url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}`
+  }
+
   try {
     const response = await axios.get(url, {
       headers: { 'X-Api-Key': VITE_NEWS_API_API_KEY },

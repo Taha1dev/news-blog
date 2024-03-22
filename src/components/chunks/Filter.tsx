@@ -4,10 +4,9 @@ import { ContextProps, DataContext } from '../../context/ContextProvider'
 import { GetNews, SearchNews } from '../../utils/axios'
 
 const Filter = () => {
-  const [selectedCat, setSelectedCat] = useState('general')
-  const [selectedLang, setSelectedLang] = useState('en')
-  const [selectedCountry, setSelectedCountry] = useState('en')
-  const sortBy = ['relevancy', 'popularity', 'publishedAt']
+  const [selectedCat, setSelectedCat] = useState('')
+  const [selectedLang, setSelectedLang] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState('')
   const {
     setNewsData,
     searchValue,
@@ -17,11 +16,6 @@ const Filter = () => {
     categories,
     sources,
   } = useContext(DataContext) as ContextProps
-  useEffect(() => {
-    console.log(langs)
-    console.log(sources)
-    console.log(categories)
-  }, [])
 
   const handleSearch = async () => {
     console.log(searchValue)
@@ -127,22 +121,6 @@ const Filter = () => {
           >
             Search
           </Button>
-        </div>
-        <div>
-          <Select
-            placeholder={''}
-            label="Sort By"
-            animate={{
-              mount: { y: 0 },
-              unmount: { y: 25 },
-            }}
-          >
-            {sortBy.map((e, i) => (
-              <Option value={e} key={i}>
-                {e}
-              </Option>
-            ))}
-          </Select>
         </div>
       </div>
     </div>
