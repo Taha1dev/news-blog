@@ -8,22 +8,15 @@ type ArticleProps = {
 const Article: React.FC<ArticleProps> = ({ article }) => {
   return (
     <div className="bg-card border border-[#d8d8d8] transition-colors hover:border-gray-800 p-4 rounded-md shadow-md flex flex-col max-w-sm text-gray-800">
-      {article.content ? (
-        <Link
-          className="text-xl font-semibold mb-2"
-          to={`Article/${new Date(article.publishedAt).toLocaleString()}/${String(article.author)}`}
-        >
-          {article.title}
-        </Link>
-      ) : (
-        <a
-          href={article.url || '#'}
-          className="text-xl underline font-semibold mb-2"
-          target="_blank"
-        >
-          {article.title}
-        </a>
-      )}
+      <a
+        href={article.url || '#'}
+        className="text-xl underline font-semibold mb-2"
+        target="_blank"
+      >
+        {article.title.length > 83
+          ? article.title.slice(0, 83) + '...'
+          : article.title}
+      </a>
 
       <p>{article.description}</p>
       <img
