@@ -33,7 +33,7 @@ npm install
 
 yarn install
 
-2. running the application
+3. running the application
 
 npm run dev
 
