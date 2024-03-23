@@ -5,8 +5,8 @@ import { GetNews, SearchNews } from '../../utils/axios'
 
 const Filter = () => {
   const [selectedCat, setSelectedCat] = useState('')
-  const [selectedLang, setSelectedLang] = useState('')
-  const [selectedCountry, setSelectedCountry] = useState('')
+  const [selectedLang, setSelectedLang] = useState('en')
+  const [selectedCountry, setSelectedCountry] = useState('us')
   const {
     setNewsData,
     searchValue,

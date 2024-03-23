@@ -20,10 +20,10 @@ const VITE_GUARDIAN_API_KEY = '2baeabf6-e517-4631-b27f-be3cda882dd6'
 
 export const GetNews = async (
   category: string = 'general',
-  lang?: string,
+  lang: string = 'en',
   country?: string
 ): Promise<NewsApiResponse> => {
-  let url = `https://newsapi.org/v2/top-headlines?category=${category}`
+  let url = `https://newsapi.org/v2/top-headlines?category=${category}&language=${lang}`
 
   if (lang && country) {
     url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&language=${lang}`
