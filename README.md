@@ -26,16 +26,18 @@ To run the project locally, follow these steps:
 - git clone https://github.com/taha1dev
 
 2. install deps
-   npm install
 
-# or
+npm install
+
+##### or
 
 yarn install
 
 2. running the application
-   npm run dev
 
-# or
+npm run dev
+
+##### or
 
 yarn dev
 
